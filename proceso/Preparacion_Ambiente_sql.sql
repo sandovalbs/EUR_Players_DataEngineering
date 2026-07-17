@@ -1,6 +1,6 @@
 -- Databricks notebook source
--- MAGIC %python
--- MAGIC dbutils.widgets.removeAll()
+
+dbutils.widgets.removeAll()
 
 -- COMMAND ----------
 
