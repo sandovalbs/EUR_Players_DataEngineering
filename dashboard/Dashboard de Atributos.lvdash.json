@@ -1,0 +1,258 @@
+{
+  "datasets": [
+    {
+      "name": "player_attributes_bar",
+      "displayName": "Player Attributes",
+      "queryLines": [
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  `avg_acceleration`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_acceleration` IS NOT NULL"
+      ]
+    },
+    {
+      "name": "player_attributes_multi_line",
+      "displayName": "Player Attributes Multi Line",
+      "queryLines": [
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  'avg_acceleration' AS `metric`,\n",
+        "  `avg_acceleration` AS `metric_value`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_acceleration` IS NOT NULL\n",
+        "UNION ALL\n",
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  'avg_ball_control' AS `metric`,\n",
+        "  `avg_ball_control` AS `metric_value`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_ball_control` IS NOT NULL\n",
+        "UNION ALL\n",
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  'avg_dribbling' AS `metric`,\n",
+        "  `avg_dribbling` AS `metric_value`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_dribbling` IS NOT NULL\n",
+        "UNION ALL\n",
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  'avg_finishing' AS `metric`,\n",
+        "  `avg_finishing` AS `metric_value`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_finishing` IS NOT NULL\n",
+        "UNION ALL\n",
+        "SELECT\n",
+        "  `player_name`,\n",
+        "  'avg_free_kick_accuracy' AS `metric`,\n",
+        "  `avg_free_kick_accuracy` AS `metric_value`\n",
+        "FROM\n",
+        "  `catalog_empresa`.`golden`.`player_attributes`\n",
+        "WHERE\n",
+        "  `player_name` IS NOT NULL\n",
+        "  AND `avg_free_kick_accuracy` IS NOT NULL"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "6b2fe586",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "player1",
+            "queries": [
+              {
+                "name": "dashboards/01f17d97750611ffad2677887be2e434/datasets/01f17d988aab1d1cb0ae29f2424d9b64_player_name",
+                "query": {
+                  "datasetName": "player_attributes_multi_line",
+                  "fields": [
+                    {
+                      "name": "player_name",
+                      "expression": "`player_name`"
+                    },
+                    {
+                      "name": "player_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Filtro de jugadores",
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "player_name",
+                    "queryName": "dashboards/01f17d97750611ffad2677887be2e434/datasets/01f17d988aab1d1cb0ae29f2424d9b64_player_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 1,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "metric_filter",
+            "queries": [
+              {
+                "name": "dashboards/01f17d97750611ffad2677887be2e434/datasets/01f17d988aab1d1cb0ae29f2424d9b64_metric",
+                "query": {
+                  "datasetName": "player_attributes_multi_line",
+                  "fields": [
+                    {
+                      "name": "metric",
+                      "expression": "`metric`"
+                    },
+                    {
+                      "name": "metric_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Filtro de métricas",
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "metric",
+                    "queryName": "dashboards/01f17d97750611ffad2677887be2e434/datasets/01f17d988aab1d1cb0ae29f2424d9b64_metric"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "player_attributes_multi_line_chart",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "player_attributes_multi_line",
+                  "fields": [
+                    {
+                      "name": "metric",
+                      "expression": "`metric`"
+                    },
+                    {
+                      "name": "player_name",
+                      "expression": "`player_name`"
+                    },
+                    {
+                      "name": "metric_value",
+                      "expression": "`metric_value`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Comparación múltiple de atributos por jugador",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "player_name",
+                  "axis": {
+                    "title": "Nombre de Jugador"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "metric_value",
+                  "axis": {
+                    "title": "Metricas de Atributos"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "metric",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "shape": {
+                  "fieldName": "metric",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 11
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
